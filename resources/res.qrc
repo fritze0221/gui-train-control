@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>fonts/BigBlueTerm437NerdFont-Regular.ttf</file>
+    </qresource>
+</RCC>
