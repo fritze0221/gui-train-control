@@ -194,7 +194,7 @@ void ApiHandler::updateMB(int identifier){
 
 void ApiHandler::onServerConnection(){
 
-    qDebug() << "New Connection";
+    qDebug() << "New Connection 111";
 
     QLocalSocket* client = server->nextPendingConnection();
 
