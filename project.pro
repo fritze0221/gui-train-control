@@ -19,8 +19,6 @@ QT += core network
 # Input
 HEADERS +=  src/pro.h \
             src/api/apihandler.h\
-            src/api/mainboardapi.h \
-            src/api/trainapi.h \
             src/button/modbutton.h \
             src/led/ledcontrol.h \
             src/led/ledgrid.h \
@@ -34,14 +32,12 @@ HEADERS +=  src/pro.h \
             src/config/fonts/fonts.h \
             external/api/src_winterface/winterface.h \
             external/api/src_winterface/winterface-api.h\
-            external/api/src_winterface/winterface-config.h\
+            external/api/src_winterface/winterface-config.h
 
 SOURCES +=  src/main.cpp\
             src/led/ledgrid.cpp \
             src/pro.cpp \
             src/api/apihandler.cpp \
-            src/api/mainboardapi.cpp \
-            src/api/trainapi.cpp \
             src/button/modbutton.cpp \
             src/led/ledcontrol.cpp \
             src/switch/switchcontrol.cpp \

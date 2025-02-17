@@ -24,15 +24,15 @@ private:
 
     QProcess* train_1;
     QProcess* train_2;
-    QProcess* mb;
+    QProcess* mainboard;
 
     QLocalServer *server;
 
     QVector<QLocalSocket*> tmp_client;
 
-    QLocalSocket *train_1_socket;
-    QLocalSocket *train_2_socket;
-    QLocalSocket *mainboard_socket;
+    QLocalSocket *train_1_socket = nullptr;
+    QLocalSocket *train_2_socket = nullptr;
+    QLocalSocket *mainboard_socket = nullptr;
 
     QVector<int> train_1_states;
     QVector<int> train_2_states;
@@ -68,10 +68,10 @@ public slots:
 private slots:
 
     void onStateChange();
+    void onProcessError(QProcess::ProcessError error);
 
     void onServerConnection();
     void onDataReceived(int id);
-    void onErrorOccurred(QLocalSocket::LocalSocketError error);
 
 };
 

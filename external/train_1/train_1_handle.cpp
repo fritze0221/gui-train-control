@@ -89,7 +89,7 @@ void TrainHandle::onStartRoutine(){
     if(speed >= 0)  train_setDirection(train,FORWARD);
     if(speed < 0) train_setDirection(train, BACKWARD);
 
-    int true_speed = ((float)TRAIN_MAX_SPEED/(float)VELO_RANGE)*(float)abs(speed);
+    int true_speed = ((float)(TRAIN_MAX_SPEED-1)/(float)VELO_RANGE)*(float)abs(speed);
 
     if(MODULE_RAMP && time != 0){
 

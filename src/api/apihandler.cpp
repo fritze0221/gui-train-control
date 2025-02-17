@@ -15,7 +15,7 @@ ApiHandler::ApiHandler(){
 
     train_1 = new QProcess;
     train_2 = new QProcess;
-    mb = new QProcess;
+    mainboard = new QProcess;
 
     QString train_1_path = "/home/urs/uni/cpp-gui/qt_project/build/Api-Build/train1";
     QString train_2_path = "/home/urs/uni/cpp-gui/qt_project/build/Api-Build/train2";
@@ -23,9 +23,19 @@ ApiHandler::ApiHandler(){
 
     train_1->start(train_1_path);
     train_2->start(train_2_path);
-    mb->start(mb_path);
+    mainboard->start(mb_path);
 
     connect(this, &ApiHandler::stateChange, this, &ApiHandler::onStateChange);
+
+    connect(train_1, &QProcess::errorOccurred, this, &ApiHandler::onProcessError);
+    connect(train_2, &QProcess::errorOccurred, this, &ApiHandler::onProcessError);
+    connect(mainboard, &QProcess::errorOccurred, this, &ApiHandler::onProcessError);
+
+}
+
+void ApiHandler::onProcessError(QProcess::ProcessError error){
+
+    qDebug() << error;
 
 }
 
@@ -94,7 +104,7 @@ void ApiHandler::onTurbin(){
 
 void ApiHandler::onStateChange(){
 
-    if(train_1_state_change && (train_1_socket->state() == QLocalSocket::ConnectedState)){
+    if(train_1_state_change && (train_1_socket != nullptr) &&(train_1_socket->state() == QLocalSocket::ConnectedState)){
 
         sendData(TRAIN_1);
 
@@ -102,7 +112,7 @@ void ApiHandler::onStateChange(){
 
     }
 
-    if(train_2_state_change && (train_2_socket->state() == QLocalSocket::ConnectedState)){
+    if(train_2_state_change && (train_2_socket != nullptr) && (train_2_socket->state() == QLocalSocket::ConnectedState)){
 
         sendData(TRAIN_2);
 
@@ -110,15 +120,16 @@ void ApiHandler::onStateChange(){
 
     }
 
-    if(mb_state_change && (mainboard_socket->state() == QLocalSocket::ConnectedState)){
+    if(mb_state_change && (mainboard_socket != nullptr) && (mainboard_socket->state() == QLocalSocket::ConnectedState)){
 
-        sendData(MAINBOARD);
+            sendData(MAINBOARD);
 
-        mb_state_change = false;
+            mb_state_change = false;
 
-        mb_states[HOUSE_1_LED+HOUSE_2_LED+2] = 0;
-        mb_states[HOUSE_1_LED+HOUSE_2_LED+3] = 0;
-        mb_states[HOUSE_1_LED+HOUSE_2_LED+4] = 0;
+            mb_states[HOUSE_1_LED+HOUSE_2_LED+2] = 0;
+            mb_states[HOUSE_1_LED+HOUSE_2_LED+3] = 0;
+            mb_states[HOUSE_1_LED+HOUSE_2_LED+4] = 0;
+
 
     }
 
@@ -194,7 +205,7 @@ void ApiHandler::updateMB(int identifier){
 
 void ApiHandler::onServerConnection(){
 
-    qDebug() << "New Connection 111";
+    qDebug() << "New Connection";
 
     QLocalSocket* client = server->nextPendingConnection();
 
@@ -203,7 +214,6 @@ void ApiHandler::onServerConnection(){
     int size = tmp_client.size();
 
     connect(client, &QLocalSocket::readyRead, this, [=](){onDataReceived(size-1);});
-    connect(client, &QLocalSocket::errorOccurred, this, &ApiHandler::onErrorOccurred);
 
 }
 
@@ -299,10 +309,6 @@ void ApiHandler::sendData(int identifier){
 
 }
 
-void ApiHandler::onErrorOccurred(QLocalSocket::LocalSocketError error)
-{
-    qDebug() << "Fehler im Kindprozess-Socket:" << error;
-}
 
 void ApiHandler::init(){
 
