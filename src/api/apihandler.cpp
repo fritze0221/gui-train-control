@@ -248,6 +248,8 @@ void ApiHandler::onDataReceived(int id){
 
         mainboard_socket = tmp_client[id];
 
+        sendData(MAINBOARD);
+
         qDebug() << "Mainboard Connected";
 
     }

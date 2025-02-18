@@ -67,14 +67,10 @@ void MainboardHandle::onDataReceived()
     for (qint32 i = 0; i < vectorSize; ++i) {
         qint32 num;
         in >> num;
-        receivedVec.append(num);
+        receivedVec[i] = num;
     }
 
-    for(int i = 0;i < vectorSize;i++){
-
-        qDebug() << receivedVec[i];
-
-    };  
+    qDebug() << receivedVec;
 
     emit sendStartRoutie();
 
@@ -84,11 +80,10 @@ void MainboardHandle::onStartRoutine(){
 
         if(receivedVec[HOUSE_1_LED+HOUSE_2_LED+2]){
             
+            qDebug() << "LED";
             
             for(int i = 0;i < HOUSE_1_LED+HOUSE_2_LED;i++){
-                
-                qDebug() << receivedVec[i];
-                
+                                
                 if(receivedVec[i] == 0){
                     
                     mainboard_setLed(mainboard,i,0);
@@ -107,6 +102,8 @@ void MainboardHandle::onStartRoutine(){
 
         if(receivedVec[HOUSE_1_LED+HOUSE_2_LED+3]){
             
+            qDebug() << "Turbine";
+
             if(receivedVec[HOUSE_1_LED+HOUSE_2_LED] == 0){
                 
                 mainboard_setLed(mainboard,HOUSE_1_LED+HOUSE_2_LED,0);
@@ -121,8 +118,12 @@ void MainboardHandle::onStartRoutine(){
             
         }
 
+        mainboard_writeLed(mainboard);
+
         if(receivedVec[HOUSE_1_LED+HOUSE_2_LED+4]){
             
+            qDebug() << "Switch";   
+
             if(receivedVec[HOUSE_1_LED+HOUSE_2_LED+1] == 0){
                 
                 mainboard_setWeiche( mainboard, 1, 0 ); // 0 .. 1
@@ -138,11 +139,7 @@ void MainboardHandle::onStartRoutine(){
             
         }
         
-
         
-        
-        
-        mainboard_writeLed(mainboard);
         
 
 

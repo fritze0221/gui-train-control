@@ -4,6 +4,9 @@ Traincontrol::Traincontrol(QWidget*parent ,int train_id)
     :train_id(train_id), QWidget(parent)
 {
 
+    if(train_id == TRAIN_1) backroudColor = TRAIN_1_CONTROL_COLOR_BACKGROUND;
+    if(train_id == TRAIN_2) backroudColor = TRAIN_2_CONTROL_COLOR_BACKGROUND;
+
     wVeloSlider = new veloSlider(this,veloSliderColor,VELO_RANGE,VELO_INTERVAL,VELO_SCALE,"Speed");
     wAccSlider = new accSlider(this, accSliderColor,ACC_RANGE,ACC_INTERVAL,ACC_SCALE,"Acc");
 

@@ -35,7 +35,7 @@ public:
     QVector<QRgb> veloSliderColor = TRAIN_CONTROL_COLOR_VELO_SLIDER;
     QVector<QRgb> accSliderColor = TRAIN_CONTROL_COLOR_ACC_SLIDER;
     QVector<QRgb> stopButtonColor = TRAIN_CONTROL_COLOR_STOP_BUTTON;
-    QRgb backroudColor = TRAIN_CONTROL_COLOR_BACKGROUND;
+    QRgb backroudColor;
 
     int time = 2000;
     int speed = 0;

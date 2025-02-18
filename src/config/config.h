@@ -43,4 +43,4 @@
 
 //MODES
 
-#define TEST false
+#define TEST true
